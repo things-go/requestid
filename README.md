@@ -1,6 +1,6 @@
 # requestid
 
-[![GoDoc](https://godoc.org/github.com/thinkgos/gin-middlewares/requestid?status.svg)](https://godoc.org/github.com/thinkgos/gin-middlewares/requestid)
+[![GoDoc](https://godoc.org/github.com/things-go/requestid?status.svg)](https://godoc.org/github.com/things-go/requestid)
 
 requestid is an requestId(traceId) middleware for [Gin](https://github.com/gin-gonic/gin)
 
@@ -10,7 +10,7 @@ requestid is an requestId(traceId) middleware for [Gin](https://github.com/gin-g
 ## Installation
 
 ```bash
-    go get github.com/thinkgos/gin-middlewares/requestid
+    go get github.com/things-go/requestid
 ```
 
 ## Simple Example
