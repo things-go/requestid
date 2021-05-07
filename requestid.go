@@ -54,11 +54,14 @@ func RequestID(opts ...Option) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
-		requestID := c.Request.Header.Get(cfg.requestIDHeader)
+
+		requestID := c.GetHeader(cfg.requestIDHeader)
 		if requestID == "" {
 			requestID = cfg.nextRequestID()
-			c.Writer.Header().Add(cfg.requestIDHeader, requestID)
 		}
+		// set response header
+		c.Header(cfg.requestIDHeader, requestID)
+		// set request context
 		ctx = context.WithValue(ctx, ctxRequestIDKey{}, requestID)
 		c.Request = c.Request.WithContext(ctx)
 		c.Next()
