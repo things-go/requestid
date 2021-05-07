@@ -55,7 +55,7 @@ func RequestID(opts ...Option) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
 
-		requestID := c.GetHeader(cfg.requestIDHeader)
+		requestID := c.Request.Header.Get(cfg.requestIDHeader)
 		if requestID == "" {
 			requestID = cfg.nextRequestID()
 		}
