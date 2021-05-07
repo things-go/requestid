@@ -10,7 +10,6 @@
 [![Tag](https://img.shields.io/github/v/tag/things-go/requestid)](https://github.com/thinkgos/requestid/tags)
 
 
-
 requestid is an requestId(traceId) middleware for [Gin](https://github.com/gin-gonic/gin)
 
 ## Format 
