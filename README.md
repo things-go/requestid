@@ -2,7 +2,6 @@
 
 [![GoDoc](https://godoc.org/github.com/things-go/requestid?status.svg)](https://godoc.org/github.com/things-go/requestid)
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/things-go/requestid?tab=doc)
-[![Build Status](https://travis-ci.com/things-go/requestid.svg)](https://travis-ci.com/things-go/requestid)
 [![codecov](https://codecov.io/gh/things-go/requestid/branch/master/graph/badge.svg)](https://codecov.io/gh/things-go/requestid)
 ![Action Status](https://github.com/things-go/requestid/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/things-go/requestid)](https://goreportcard.com/report/github.com/things-go/requestid)
