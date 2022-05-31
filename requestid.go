@@ -12,41 +12,41 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Key to use when setting the request ID.
-type ctxRequestIDKey struct{}
+// Key to use when setting the request Id.
+type ctxRequestIdKey struct{}
 
-// Config defines the config for RequestID middleware
+// Config defines the config for RequestId middleware
 type Config struct {
-	requestIDHeader string
+	requestIdHeader string
 	nextRequestID   func() string
 }
 
-// Option RequestID option
+// Option RequestId option
 type Option func(*Config)
 
-// WithRequestIDHeader optional request id header (default "X-Request-Id")
-func WithRequestIDHeader(s string) Option {
+// WithRequestIdHeader optional request id header (default "X-Request-Id")
+func WithRequestIdHeader(s string) Option {
 	return func(c *Config) {
-		c.requestIDHeader = s
+		c.requestIdHeader = s
 	}
 }
 
-// WithNextRequestID optional next request id function (default NextRequestID function)
-func WithNextRequestID(nextRequestID func() string) Option {
+// WithNextRequestId optional next request id function (default NextRequestId function)
+func WithNextRequestId(nextRequestId func() string) Option {
 	return func(c *Config) {
-		c.nextRequestID = nextRequestID
+		c.nextRequestID = nextRequestId
 	}
 }
 
-// RequestID is a middleware that injects a request ID into the context of each
-// request. if it is empty, set the write head
-// - requestIDHeader is the name of the HTTP Header which contains the request id.
-// Exported so that it can be changed by developers. (default "X-Request-Id")
-// - nextRequestID generates the next request ID.(default NextRequestID)
-func RequestID(opts ...Option) gin.HandlerFunc {
+// RequestId is a middleware that injects a request Id into the context of each
+// request. if it is empty, set to write head
+// - requestIdHeader is the name of the HTTP Header which contains the request id.
+// Exported so that it can be changed by developers. (default "X-Trace-Id")
+// - nextRequestID generates the next request ID.(default NextRequestId)
+func RequestId(opts ...Option) gin.HandlerFunc {
 	cfg := &Config{
-		requestIDHeader: "X-Request-ID",
-		nextRequestID:   NextRequestID,
+		requestIdHeader: "X-Trace-Id",
+		nextRequestID:   NextRequestId,
 	}
 	for _, opt := range opts {
 		opt(cfg)
@@ -55,31 +55,31 @@ func RequestID(opts ...Option) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
 
-		requestID := c.Request.Header.Get(cfg.requestIDHeader)
+		requestID := c.Request.Header.Get(cfg.requestIdHeader)
 		if requestID == "" {
 			requestID = cfg.nextRequestID()
 		}
 		// set response header
-		c.Header(cfg.requestIDHeader, requestID)
+		c.Header(cfg.requestIdHeader, requestID)
 		// set request context
-		ctx = context.WithValue(ctx, ctxRequestIDKey{}, requestID)
+		ctx = context.WithValue(ctx, ctxRequestIdKey{}, requestID)
 		c.Request = c.Request.WithContext(ctx)
 		c.Next()
 	}
 }
 
-// FromRequestID returns a request ID from the given context if one is present.
+// FromRequestId returns a request ID from the given context if one is present.
 // Returns the empty string if a request ID cannot be found.
-func FromRequestID(ctx context.Context) string {
-	reqID, ok := ctx.Value(ctxRequestIDKey{}).(string)
+func FromRequestId(ctx context.Context) string {
+	reqID, ok := ctx.Value(ctxRequestIdKey{}).(string)
 	if !ok {
 		return ""
 	}
 	return reqID
 }
 
-func GetRequestID(c *gin.Context) string {
-	return FromRequestID(c.Request.Context())
+func GetRequestId(c *gin.Context) string {
+	return FromRequestId(c.Request.Context())
 }
 
 var prefix string
@@ -118,11 +118,11 @@ func init() {
 	prefix = fmt.Sprintf("%s-%d-%s-", hostname, os.Getpid(), b64[:16])
 }
 
-// NextRequestID generates the next request ID.
+// NextRequestId generates the next request ID.
 // A request ID is a string of the form like {hostname}-{pid}-{init-rand-value}-{sequence},
 // where "random" is a base62 random string that uniquely identifies this go
 // process, and where the last number is an atomically incremented request
 // counter.
-func NextRequestID() string {
+func NextRequestId() string {
 	return fmt.Sprintf("%s%012d", prefix, atomic.AddUint64(&sequenceID, 1))
 }

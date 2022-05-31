@@ -10,10 +10,10 @@ import (
 
 func main() {
 	router := gin.New()
-	router.Use(requestid.RequestID())
+	router.Use(requestid.RequestId())
 	router.GET("/", func(c *gin.Context) {
-		fmt.Println(requestid.FromRequestID(c.Request.Context()))
-		fmt.Println(requestid.GetRequestID(c))
+		fmt.Println(requestid.FromRequestId(c.Request.Context()))
+		fmt.Println(requestid.GetRequestId(c))
 	})
 	router.Run(":8080")
 }

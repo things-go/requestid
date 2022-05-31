@@ -46,9 +46,9 @@ func TestRequestID(t *testing.T) {
 
 		r := gin.New()
 
-		r.Use(RequestID(WithRequestIDHeader(test.requestIDHeader)))
+		r.Use(RequestId(WithRequestIdHeader(test.requestIDHeader)))
 		r.GET("/", func(c *gin.Context) {
-			requestID := GetRequestID(c)
+			requestID := GetRequestId(c)
 			response := fmt.Sprintf("RequestId: %s", requestID)
 			_, _ = w.WriteString(response)
 		})
@@ -66,9 +66,9 @@ func TestFirstRequest(t *testing.T) {
 	w := httptest.NewRecorder()
 
 	r := gin.New()
-	r.Use(RequestID(WithNextRequestID(NextRequestID)))
+	r.Use(RequestId(WithNextRequestId(NextRequestId)))
 	r.GET("/", func(c *gin.Context) {
-		requestId := GetRequestID(c)
+		requestId := GetRequestId(c)
 		gotResponse = fmt.Sprintf("RequestId: %s", requestId)
 		_, _ = w.WriteString(gotResponse)
 	})
