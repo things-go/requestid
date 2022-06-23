@@ -22,4 +22,4 @@ jobs:
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v2
         with:
-          golangci_lint_flags: "-E goimports -E gocritic -E misspell -E revive"
+          golangci_lint_flags: "-E goimports -E gocritic -E misspell"
